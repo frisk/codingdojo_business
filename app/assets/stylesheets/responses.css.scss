@@ -1,0 +1,31 @@
+// Place all the styles related to the Responses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.header{
+	position:relative;
+}
+.header h2{
+	float:left;
+	bottom:0px;
+	position:absolute;
+}
+.header span{
+	color: red;
+}
+.header img{
+	float:right;
+	width:250px;
+}
+.header .dojo_class{
+	width:200px;
+	border-radius:6px;
+	box-shadow: 5px 5px 5px #888888;
+	margin:10px;
+}
+.clear{
+	clear:both;
+}
+
+textarea{
+	width:400px;
+}

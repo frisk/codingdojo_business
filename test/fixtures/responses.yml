@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  term: 1
+  bootcamp_id: 
+  survey_id: 
+  staff_id: 
+
+two:
+  term: 1
+  bootcamp_id: 
+  survey_id: 
+  staff_id: 

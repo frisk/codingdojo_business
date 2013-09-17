@@ -1,0 +1,25 @@
+<%= form_tag(survey_response_answers_path(@survey.id, @response)) %>
+	<% @questions.each do |question| %>
+		<% @i += 1 %>
+	<div class="inputs">
+		<%= hidden_field_tag "answer[#{@i}][question_id]", question.id %>
+		<%= hidden_field_tag "answer[#{@i}][response_id]", @response %>
+		<%= label_tag "answer[#{@i}][content]", question.content %>
+		<% if question.txt_area %>
+			<%= text_area_tag "answer[#{@i}][content]", nil, cols: "100", rows: "5" %>
+		<% elsif !question.rated %>
+			<%= text_field_tag "answer[#{@i}][content]" %>
+		<% else %>
+			<% (1..10).each do |i| %>
+				<label class="radio inline">
+				<%= radio_button_tag "answer[#{@i}][content]", i %>
+				<%= i %>
+				</label>
+			<% end %>
+		<% end %>
+	</div>
+	<% end %>
+	<div class="actions">
+		<%= submit_tag "Send Feedback!", class: 'btn btn-inverse' %>
+	</div>
+</form>

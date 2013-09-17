@@ -1,0 +1,15 @@
+<div class="hero-unit">
+	<% content_for :header do %>
+		<h2><span>Dojo Class <%= @bootcamp.title %></span><hr> Bootcamp Survey</h2>
+		<%= image_tag 'coding_dojo_black.png' %>
+		<%= image_tag 'http://www.languageinsight.com/blog/wp-content/uploads/2013/01/St-Bernard.jpg', class: 'dojo_class' %>
+		<div class="clear"></div>
+	<% end %>
+<%= simple_form_for @response, :url => "/bootcamps/#{@bootcamp.id}/surveys/#{@survey.id}/responses" do |f| %>
+	<%= f.input :bootcamp_id, :as => :hidden, :input_html => { :value => @bootcamp.id } %>
+	<%= f.input :survey_id, :as => :hidden, :input_html => { :value => @survey.id } %>
+	<%= f.input :term, label: "Select the current survey term", collection: 1..4, include_blank: false %>
+	<%= f.association :staff, label: "Select the TA that assisted you for this term", label_method: :first_name, :include_blank => false %>
+	<%= f.button :submit, "Fill Out the Survey!", :class => 'btn btn-inverse' %>
+<% end %>
+</div>
