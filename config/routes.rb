@@ -8,7 +8,7 @@ CodingdojoBusiness::Application.routes.draw do
   #   resources :surveys
   #   resources :responses, shallow: true
   # end
-  resources :surveys, only: [] do 
+  resources :surveys do 
     resources :responses, only: [] do
       resources :answers, shallow: true
     end

@@ -3,7 +3,7 @@
 		<% @i += 1 %>
 	<div class="inputs">
 		<%= hidden_field_tag "answer[#{@i}][question_id]", question.id %>
-		<%= hidden_field_tag "answer[#{@i}][response_id]", @response %>
+		<%= hidden_field_tag "answer[#{@i}][response_id]", @response.id %>
 		<%= label_tag "answer[#{@i}][content]", question.content %>
 		<% if question.txt_area %>
 			<%= text_area_tag "answer[#{@i}][content]", nil, cols: "100", rows: "5" %>
