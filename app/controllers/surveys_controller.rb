@@ -1,6 +1,6 @@
 class SurveysController < ApplicationController
   before_action :set_survey, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authorize
   # GET /surveys
   # GET /surveys.json
   def index

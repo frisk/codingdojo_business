@@ -1,6 +1,6 @@
 class BootcampsController < ApplicationController
   before_action :set_bootcamp, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authorize
   # GET /bootcamps
   # GET /bootcamps.json
   def index

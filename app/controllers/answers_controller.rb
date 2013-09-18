@@ -1,17 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
-  # GET /answers
-  # GET /answers.json
-  def index
-    @answers = Answer.all
-  end
 
-  # GET /answers/1
-  # GET /answers/1.json
-  def show
-  end
-
-  # GET /answers/new
   def new
     @survey = Survey.find(params[:survey_id])
     @response = Response.find(params[:response_id])
@@ -20,18 +9,14 @@ class AnswersController < ApplicationController
     @i = 0
   end
 
-  # GET /answers/1/edit
-  def edit
-  end
-
-  # POST /answers
-  # POST /answers.json
   def create
     @errors = false
 
     params[:answer].each do |index, ans|
       @answer = Question.find(ans[:question_id]).answers.new(content: ans[:content])
-      @answer.response_id = Response.find(ans[:response_id]).id
+      @response = Response.find(ans[:response_id])
+      @bootcamp = @response.bootcamp
+      @answer.response_id = @response.id
       if @answer.save
         puts "#{@answer.id} created successfully"
       else
@@ -40,40 +25,10 @@ class AnswersController < ApplicationController
       end
     end
     update_spreadsheet
-
-    render :thank_you if !@errors
-    # respond_to do |format|
-    #   if @answer.save
-    #     format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
-    #     format.json { render action: 'show', status: :created, location: @answer }
-    #   else
-    #     format.html { render action: 'new' }
-    #     format.json { render json: @answer.errors, status: :unprocessable_entity }
-    #   end
-    # end
-  end
-
-  # PATCH/PUT /answers/1
-  # PATCH/PUT /answers/1.json
-  def update
-    respond_to do |format|
-      if @answer.update(answer_params)
-        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /answers/1
-  # DELETE /answers/1.json
-  def destroy
-    @answer.destroy
-    respond_to do |format|
-      format.html { redirect_to answers_url }
-      format.json { head :no_content }
+    if !@errors
+      render :thank_you 
+    else
+      render action: 'new'
     end
   end
 

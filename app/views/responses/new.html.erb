@@ -2,7 +2,7 @@
 	<% content_for :header do %>
 		<h2><span>Dojo Class <%= @bootcamp.title %></span><hr> Bootcamp Survey</h2>
 		<%= image_tag 'coding_dojo_black.png' %>
-		<%= image_tag 'http://www.languageinsight.com/blog/wp-content/uploads/2013/01/St-Bernard.jpg', class: 'dojo_class' %>
+		<%= image_tag 'http://upload.wikimedia.org/wikipedia/en/thumb/b/b1/Mortal_Kombat_Logo.svg/300px-Mortal_Kombat_Logo.svg.png', class: 'dojo_class' %>
 		<div class="clear"></div>
 	<% end %>
 <%= simple_form_for @response, :url => "/bootcamps/#{@bootcamp.id}/surveys/#{@survey.id}/responses" do |f| %>
