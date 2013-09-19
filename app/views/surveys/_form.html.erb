@@ -1,11 +1,26 @@
-<%= simple_form_for(@survey) do |f| %>
-  <%= f.error_notification %>
+<%= form_for @survey do |f| %>
+  <% if @survey.errors.any? %>
+    <div class="error_messages">
+      <h2><%= pluralize(@survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
+      <ul>
+      <% @survey.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <div class="inputs">
-    <%= f.input :name %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
   </div>
 
+  <%= f.fields_for :questions do |builder| %>
+	<%= render 'question_fields', f: builder %>
+  <% end %>
+  <%= link_to_add_fields "New Question", f, :questions %>
+  
   <div class="actions">
-    <%= f.button :submit %>
+    <%= f.submit %>
   </div>
 <% end %>

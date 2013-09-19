@@ -10,7 +10,6 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
-    render text: params
   end
 
   # GET /surveys/new
@@ -41,6 +40,7 @@ class SurveysController < ApplicationController
   # PATCH/PUT /surveys/1
   # PATCH/PUT /surveys/1.json
   def update
+    # render text: survey_params
     respond_to do |format|
       if @survey.update(survey_params)
         format.html { redirect_to @survey, notice: 'Survey was successfully updated.' }
@@ -62,11 +62,6 @@ class SurveysController < ApplicationController
     end
   end
 
-  def codingdojo_survey
-    @question = Survey.find(params[:id]).questions.all
-
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_survey
@@ -75,6 +70,6 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params.require(:survey).permit(:name)
+      params.require(:survey).permit(:name, questions_attributes: [:id, :content])
     end
 end

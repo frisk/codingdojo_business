@@ -7,7 +7,8 @@ class ResponsesController < ApplicationController
 
   def create
   	@response = Response.new(params.require(:response).permit(:term, :survey_id, :staff_id, :bootcamp_id))
-  	if @response.save
+  	redirect_to new_survey_response_answer_path(0, 0) if current_user
+    if @response.save
   		redirect_to new_survey_response_answer_path(@response.survey_id, @response.id)
   	end
   end
