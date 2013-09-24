@@ -8,21 +8,7 @@
 </head>
 <body>
 <div class="container">
-	  <div class="masthead">
-        <h3 class="muted">Coding Dojo Business</h3>
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul class="nav">
-                <li><a href="/">Home</a></li>
-                <li><a href="<%= surveys_path %>">Surveys</a></li>
-                <li><a href="<%= bootcamps_path %>">Bootcamps</a></li>
-              </ul>
-            </div>
-          </div>
-        </div><!-- /.navbar -->
-        <%= image_tag 'coding_dojo_black.png' %>
-      </div>
+  <%= render 'layouts/nav' unless @current_user.nil? %>
 	<div class="header">
 		<%= yield :header %>
 	</div>

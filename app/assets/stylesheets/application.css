@@ -11,3 +11,10 @@
  *= require_self
  *= require_tree .
  */
+.masthead-cust img{
+	width:200px;
+}
+.masthead-cust h3{
+	display:inline-block;
+	color:#4080fd;
+}
