@@ -16,10 +16,9 @@ CodingdojoBusiness::Application.routes.draw do
   #   resources :surveys
   #   resources :responses, shallow: true
   # end
-  resources :surveys do 
-    resources :responses, only: [] do
-      resources :answers, shallow: true
-    end
+  resources :surveys do |survey| 
+    get "#{survey}/responses/all" => 'responses#all'
+    resources :responses, shallow: true
   end
 
   resources :bootcamps do

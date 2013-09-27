@@ -1,0 +1,7 @@
+<% @bootcamps.each do |bootcamp| %>
+	<% @bootcamp = bootcamp %>
+	<% @ratings = Answer.find_by_sql("SELECT questions.short_content, avg(answers.content) as ratings FROM answers JOIN questions ON questions.id = answers.question_id JOIN responses ON responses.id = answers.response_id WHERE questions.rated = 't' AND responses.bootcamp_id = #{@bootcamp.id} AND responses.survey_id = #{@survey.id} GROUP BY responses.term, questions.id"); %>
+	<% @r_types = Question.find_all_by_rated('t') %>
+	<% @r_type_end = @r_types.last %>
+	<%= render 'header' %>
+<% end %>
