@@ -1,7 +1,50 @@
+<% @r_types = Question.find_all_by_rated('t') %>
+<% @r_type_end = @r_types.last %>
+<script type="text/javascript">
+	$(function() {
+		new Highcharts.Chart({
+			chart: {
+				renderTo: "chart_overview"
+			},
+			title: {
+				text: "Bootcamps Overview"
+			},
+			xAxis: {
+				title: {
+					text: "Bootcamps to Date"
+				},
+				categories: [<% Bootcamp.select('date').order('date').each do |bootcamp| %>
+							"<%= bootcamp.date %>",
+							<% end %>  
+				]
+			},
+			yAxis: {
+				title: {
+					text: "Rating"
+				}
+			},
+			series: [
+				<% @r_types.each do |r_type| %>
+				{
+				name: "<%= r_type.short_content %>",
+				data: <%= @bootcamps.reverse.map {|bootcamp| Answer.find_by_sql("SELECT  avg(answers.content) as rating FROM answers JOIN questions ON questions.id = answers.question_id JOIN responses ON responses.id = answers.response_id WHERE questions.id = #{r_type.id} AND responses.bootcamp_id = #{bootcamp.id} AND responses.survey_id = #{@survey.id}").first.rating.to_f.round(2)}.inspect %> 
+				}<%= ',' unless r_type.id == @r_type_end.id %>
+				<% end %>
+			]
+		})
+	})
+</script>
+<div class="row">	
+	<div class="page-header">
+		<h1><%= @survey.name %> Overview</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="pull-left" id="chart_overview" style="width:800px; height: 400px;"></div>
+</div>
 <% @bootcamps.each do |bootcamp| %>
 	<% @bootcamp = bootcamp %>
 	<% @ratings = Answer.find_by_sql("SELECT questions.short_content, avg(answers.content) as ratings FROM answers JOIN questions ON questions.id = answers.question_id JOIN responses ON responses.id = answers.response_id WHERE questions.rated = 't' AND responses.bootcamp_id = #{@bootcamp.id} AND responses.survey_id = #{@survey.id} GROUP BY responses.term, questions.id"); %>
-	<% @r_types = Question.find_all_by_rated('t') %>
-	<% @r_type_end = @r_types.last %>
-	<%= render 'header' %>
+	<% @responses = @bootcamp.responses.order("term desc").find_all_by_survey_id(@survey.id) %>
+	<%= render 'feedback' %>
 <% end %>
