@@ -11,6 +11,7 @@
  *= require_self
  *= require_tree .
  */
+@import "bootstrap";
 
 @font-face {
   font-family: 'lastninja';
@@ -18,13 +19,12 @@
   font-weight: normal;
   font-style: normal;
 }
-.masthead-cust img{
-	width:200px;
-}
+
 .masthead-cust h3{
 	font-family: 'lastninja';
 	display:inline-block;
-	color:#4080fd;
+	color:red;
+  font-size: 12pt;
 }
 .dojo-class-name {
 	font-family: 'lastninja';
@@ -34,4 +34,72 @@
     1px -1px 0 red,
     -1px 1px 0 red,
      1px 1px 0 red;
+}
+.logo{
+  float:left;
+}
+.navbar-inner.navbar-inner-custom{
+  background-color: #eeeeee;
+  background-image: none;
+}
+.page-header.page-header-custom{
+  margin:0px;
+}
+.table.table-survey{
+  width:725px;
+}
+.btn-inverse.btn-inverse-add{
+  color:green;
+  background-color:#eeeeee;
+  background-image:none;
+}
+a.i-warlock, .navbar-default .navbar-nav > li > a.i-warlock{
+  color:red;
+  background:black
+}
+a.i-warlock:hover, .navbar-default .navbar-nav > li > a.i-warlock:hover{
+  color:white;
+  background:#000;
+}
+a.add_fields{
+  color:green;
+}
+.remove-fields{
+  color:red;
+}
+ul.manage-options{
+  list-style-type:none;
+  padding: 0px;
+}
+ul.manage-options li:first-child{
+  margin-left: 0px;
+}
+ul.manage-options li{
+  width: 16%;
+  display:inline-block;
+  font-size: 18pt;
+  margin-left: 50px;
+  text-align: center;
+}
+ul.manage-options li:hover{
+  background: white;
+  color: red;
+}
+ul.manage-options li a:hover{
+  text-decoration:none;
+}
+.bootcamp-info{
+  margin-right: 30px;
+}
+.bootcamp-info .instructor-info{
+  display:inline-block;
+}
+.bootcamp-info .ta-info{
+  display:inline-block;
+  vertical-align:top;
+  margin-left:40px;
+}
+.ta-info ul{
+  padding-left:0px;
+  list-style-type:none;
 }

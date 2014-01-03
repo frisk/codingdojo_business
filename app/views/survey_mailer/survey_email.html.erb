@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+ <html>
+   <head>
+     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+   </head>
+   <body>
+     <p><%= @info[:content] %></p>
+     <p>Please follow this link to fill out the survey
+     <%= "#{ENV["DOMAIN_NAME"]}:#{ENV["PORT"]}/bootcamps/#{@info[:bootcamp_id]}/surveys/#{@info[:survey_id]}/responses/new" %>
+    </p>
+   </body>
+</html>

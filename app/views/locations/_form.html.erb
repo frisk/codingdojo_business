@@ -1,0 +1,8 @@
+<%= simple_form_for(@location) do |f| %>
+  <%= f.error_notification %>
+
+    <%= f.input :city %>
+    <%= f.input :state %>
+
+    <%= f.button :submit, class: "btn btn-default" %>
+<% end %>

@@ -1,0 +1,26 @@
+<div class="row">	
+	<div class="pull-left page-header page-header-custom">
+		<h1><span class="dojo-class-name"><%= @bootcamp.title %></span></h1>
+		<h3><%= "#{@bootcamp.location.city}, #{@bootcamp.location.state}" %></h3>
+		<h3><%= @bootcamp.date.to_datetime.strftime("%B %d %Y") %></h3>
+	</div>
+	<div class="pull-right bootcamp-info">
+		<div class="group-email">
+			<h4>Group Email</h4>
+			<p><%= @bootcamp.group_email %></p>
+		</div>
+		<div class="instructor-info">
+			<h4>Instructor</h4>
+			<p><%= @bootcamp.staffs.find_by_position_id(1).user.first_name %></p>
+		</div>
+		<div class="ta-info">
+			<h4>Remote TA's</h4>
+			<ul>
+				<% @r_tas.each do |r_ta| %>
+				<li><%= r_ta.user.first_name %></li>
+				<% end %>
+			</ul>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

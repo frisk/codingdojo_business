@@ -1,14 +1,41 @@
 <div class="masthead masthead-cust">
-        <%= image_tag 'coding_dojo_black.png' %><h3 class="muted">Business</h3>
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul class="nav">
-                <li><a href="/">Home</a></li>
-                <li><a href="<%= surveys_path %>">Surveys</a></li>
-                <li><a href="<%= bootcamps_path %>">Bootcamps</a></li>
-              </ul>
-            </div>
+        <div class="heading">
+          <div class="logo">
+            <%= image_tag 'coding_dojo_black.png', class: "dojo-logo" %>
+            <h3>Business</h3>
           </div>
-        </div><!-- /.navbar -->
+          <% if !@current_user.nil? %>
+            <div class="warlock">
+              <div class="dev-opts">
+                <h5>Welcome <span class="user-welcome"><%= "#{@current_user.first_name} #{@current_user.last_name}" %></span></h5>
+                <%= link_to "Logout", logout_path %>
+              </div>
+            </div>
+          <% end %>
+          <div class="clear"></div>
+        </div>
+        <nav class="navbar navbar-default" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Coding Dojo</a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="<%= surveys_path %>">Surveys</a></li>
+              <li><a href="<%= bootcamps_path %>">Groups</a></li>
+            </ul>
+            <% if !@warlock.nil? %>
+            <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to " Manage Business", manage_path, class: 'btn btn-default btn-lg glyphicon glyphicon-briefcase i-warlock' %></li>
+            </ul>
+            <% end %>
+          </div><!-- /.navbar-collapse -->
+        </nav>
       </div>

@@ -1,0 +1,38 @@
+.dojo-logo{
+  width: 600px;
+  top: 160px;
+  left:320px;
+  position:absolute;
+}
+.dojo-arena {
+  top: 0px;
+  position: absolute;
+  width: 1223px;
+  height: 688px;
+}
+.door{
+  position: absolute;
+  top: 92px;
+  height: 425px;
+}
+.right-inner{
+  right: 320px;
+}
+.left-inner{
+  left: 310px;
+}
+.left-outer{
+  left: 120px;
+}
+.right-outer{
+  right: 120px;
+}
+.middle{
+  right: 510px;
+}
+#ninja{
+  z-index: 3000;
+  position:absolute;
+  top:590px;
+  left: 400px;
+}

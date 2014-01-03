@@ -1,3 +1,10 @@
 // Place all the styles related to the Bootcamps controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.survey-icons img{
+	margin-left: 15px;
+	width: 20px;
+}
+a.survey-icons:hover, a.survey-icons:visited{
+	background:none;
+}

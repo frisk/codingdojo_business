@@ -1,7 +1,16 @@
 CodingdojoBusiness::Application.routes.draw do
+  resources :locations
+
+  resources :homes
+  resources :staffs
+  resources :positions
+
   get 'signup', to: 'users#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
+
+  get 'thankyou', to: 'homes#index', as: 'thankyou'
+  get 'manage', to: 'manager#index', as: 'manage'
 
   root to: 'sessions#new'
   
@@ -21,8 +30,15 @@ CodingdojoBusiness::Application.routes.draw do
     resources :responses, shallow: true
   end
 
-  resources :bootcamps do
-    resources :surveys do
+  resources :responses, shallow: true do
+    resources :answers
+  end
+
+  resources :bootcamps do |bootcamp|
+    resources :surveys do |survey|
+      get "#{bootcamp}/#{survey}/feedbacks/new" => "bootcamps#new_feedback"
+      post "#{bootcamp}/#{survey}/feedbacks" => "bootcamps#create_feedback"
+      get "#{bootcamp}/#{survey}/responses/statistics" => 'responses#statistics'
       resources :responses, shallow: true
     end
   end

@@ -18,8 +18,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'bootstrap-sass'
-gem 'simple_form'
+gem 'bootstrap-sass', '~> 3.0.1.0.rc'
+gem 'simple_form', "~> 3.0.0.beta1"
 gem 'figaro'
 gem 'gibbon'
 gem 'google_drive'

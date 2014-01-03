@@ -1,0 +1,22 @@
+<h2>Send <%= @survey.name %></h2>
+<%= form_tag(bootcamp_survey_feedbacks_path) %>
+	<%= hidden_field_tag "info[bootcamp_id]", @bootcamp.id %>
+	<%= hidden_field_tag "info[survey_id]", @survey.id %>
+	<%= hidden_field_tag "info[to]", @bootcamp.group_email %>
+	<%= hidden_field_tag "info[from]", @current_user.email %>
+	<div class="form-group">
+		<%= label_tag "info[subject]", "Subject" %>
+		<%= text_field_tag "info[subject]", nil,  class: "form-control" %>
+		<span class="help-block">Subject of the message</span>
+	</div>
+	<div class="form-group">
+		<%= label_tag "info[content]", "Message" %>
+		<%= text_area_tag "info[content]", nil, class: "form-control" %>
+		<span class="help-block">Content of the email message. Do not include survey link. It will be included at the bottom of the message.</span>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-10">
+	    <%= submit_tag "Send Feedback Request", class: "btn btn-default" %>
+	    </div>
+	</div>
+</form>

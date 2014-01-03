@@ -1,0 +1,27 @@
+<div class="pull-left"><h2>Staff</h2></div>
+<div class="pull-right">
+  <%= link_to ' New Staff Member', new_staff_path, class: "add_fields btn btn-default glyphicon glyphicon-plus-sign" %>
+</div>
+<div class="clear"></div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Position</th>
+			<% if !@warlock.nil? %>
+			  <th>Actions</th>
+			 <% end %>
+		</tr>
+	</thead>
+<% @staffs.each do |staff| %>
+<tr>
+	<td><%= staff.user.first_name %></td>
+	<td><%= staff.user.last_name %></td>
+	<td><%= staff.user.email %></td>
+	<td><%= staff.position.name %></td>
+	<td><%= link_to " Edit", edit_staff_path(staff.id), class: "btn btn-default btn-sm glyphicon glyphicon-edit i-warlock" %></td>
+</tr>
+<% end %>
+</table>

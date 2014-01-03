@@ -7,7 +7,7 @@
 				renderTo: "chart_overview"
 			},
 			title: {
-				text: "Bootcamps Overview"
+				text: "<%= @survey.name %>"
 			},
 			xAxis: {
 				title: {
@@ -36,7 +36,7 @@
 </script>
 <div class="row">	
 	<div class="page-header">
-		<h1><%= @survey.name %> Overview</h1>
+		<h1><%= @survey.name %></h1>
 	</div>
 </div>
 <div class="row">

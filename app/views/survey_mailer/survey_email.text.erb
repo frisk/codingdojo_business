@@ -1,0 +1,5 @@
+ <%= @info[:content] %>
+
+Please follow this link to fill out the survey
+
+<%= "#{ENV["LOCAL_IP"]}/bootcamps/#{@info[:bootcamp_id]}/surveys/#{@info[:survey_id]}/responses/new" %>

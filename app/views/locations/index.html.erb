@@ -1,0 +1,27 @@
+<div class="pull-left"><h2>Locations</h2></div>
+<div class="pull-right">
+  <%= link_to ' New Location', new_location_path, class: "add_fields btn btn-default glyphicon glyphicon-plus-sign" %>
+</div>
+<div class="clear"></div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>City</th>
+			<th>State</th>
+			<% if !@warlock.nil? %>
+			  <th>Actions</th>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+		<% @locations.each do |l|%>
+		<tr>
+			<td><%= l.city %></td>
+			<td><%= l.state %></td>
+			<% if !@warlock.nil? %>
+        		<td><%= link_to ' Edit', edit_location_path(l.id), class: "btn btn-default btn-sm glyphicon glyphicon-edit i-warlock" %></td>
+			<% end %>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

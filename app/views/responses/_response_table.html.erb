@@ -1,6 +1,6 @@
 <table class="table table-striped">
 	<thead>
-		<th>date</th>
+		<th>Date</th>
 		<% @questions.each do |question| %>
 			<%= content_tag(:th, question.short_content) %>
 		<% end %>
@@ -10,7 +10,7 @@
 		<% @responses.each do |response| %>
 		<tr>
 			<td><%= response.created_at.strftime("%b %e %Y") %></td>
-			<% response.answers.select("questions.id as qid, questions.rated, answers.content as a_cont").joins(:question).order("questions.rated").each do |answer|%>
+			<% response.answers.select("questions.id as qid, questions.rated, answers.content as a_cont").joins(:question).order("questions.rated, questions.id").each do |answer|%>
 						<td><%= answer.a_cont %></td>
 			<% end %>
 			<td><%= response.staff.try(:first_name) %></td>

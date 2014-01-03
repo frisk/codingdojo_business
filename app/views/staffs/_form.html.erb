@@ -1,0 +1,27 @@
+<%= simple_form_for(@user, url: staffs_path) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :email %>
+    <div class="form-group staff optional position">
+    	<label class="select opitonal" for="staff_position_id]">Position</label>
+	    <select class="select optional form-control" name="staff[position_id]">
+			<% @positions.each do |p| %>
+				<% if !@staff.nil? && p.id == @staff.position.id %>
+          <option selected value="<%= p.id %>"><%= p.name %></option>
+        <% else %>
+          <option value="<%= p.id %>"><%= p.name %></option>
+			  <% end %>
+      <% end %>
+	    </select>
+	</div>
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit, class: "btn btn-default" %>
+  </div>
+<% end %>

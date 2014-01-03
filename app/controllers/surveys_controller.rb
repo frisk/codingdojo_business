@@ -10,6 +10,7 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
+    @questions = @survey.questions.order("rated")
   end
 
   # GET /surveys/new

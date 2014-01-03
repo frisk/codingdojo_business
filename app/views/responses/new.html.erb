@@ -1,15 +1,27 @@
-<div class="hero-unit">
-	<% content_for :header do %>
-		<h2><span>Dojo Class <%= @bootcamp.title %></span><hr> Bootcamp Survey</h2>
-		<%= image_tag 'coding_dojo_black.png' %>
-		<%= image_tag 'http://upload.wikimedia.org/wikipedia/en/thumb/b/b1/Mortal_Kombat_Logo.svg/300px-Mortal_Kombat_Logo.svg.png', class: 'dojo_class' %>
-		<div class="clear"></div>
-	<% end %>
+	<div class="row">
+		<% content_for :header do %>
+			<div class="pull-left">
+				<h2><span>Dojo Class <%= @bootcamp.title %></span><hr> Bootcamp Survey</h2>
+			</div>
+			<div class="pull-right">
+				<%= image_tag 'coding_dojo_black.png' %>
+			</div>
+			<div class="clear"></div>
+		<% end %>
+	</div>
+<div class="jumbotron">
 <%= simple_form_for @response, :url => "/bootcamps/#{@bootcamp.id}/surveys/#{@survey.id}/responses" do |f| %>
 	<%= f.input :bootcamp_id, :as => :hidden, :input_html => { :value => @bootcamp.id } %>
 	<%= f.input :survey_id, :as => :hidden, :input_html => { :value => @survey.id } %>
-	<%= f.input :term, label: "Select the current survey term", collection: 1..4, include_blank: false %>
-	<%= f.association :staff, label: "Select the TA that assisted you for this term", label_method: :first_name, :include_blank => false %>
-	<%= f.button :submit, "Fill Out the Survey!", :class => 'btn btn-inverse' %>
+	<%= f.input :term, label: "Select the current survey term: ", collection: 1..4, include_blank: false %>
+	<div class="form-group select optional">
+		<label class="select optional" for="response_staff_id"> Select the TA that assisted you for this term: </label>
+		<select class="select optional form-control" id="response_staff_id" name="response[staff_id]">
+			<% @staff.each do |s| %>
+				<option value="<%= s.id %>"><%= s.user.first_name %></option>
+			<% end %>
+		</select>
+	</div>
+	<%= f.button :submit, "Fill Out the Survey!", :class => 'btn btn-default' %>
 <% end %>
 </div>

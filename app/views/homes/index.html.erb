@@ -1,0 +1,186 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    var doors_open = false;
+
+    var rightInner = 320;
+    var rightOuter = 120;
+    var leftInner = 310;
+    var leftOuter = rightOuter;
+    var middle = 510;
+
+    var rightBound = 1159;
+    var leftBound = 4;
+    var bottomBound = 601;
+    var topBound = 447;
+    var leftDoor = 114;
+    var rightDoor = 1049;
+
+    function set_defaults(){
+      $('.right-inner').css({ right: rightInner });
+      $('.left-inner').css({ left: leftInner });
+      $('.left-outer').css({ left: leftOuter });
+      $('.right-outer').css({ right: rightOuter });
+      $('.middle').css({ right: middle });
+    }
+    
+    function move_door(stop, position, identifier, cb){
+      value = $(identifier).css(position, function(index, value){
+        val = parseInt(value)
+        if((val > stop && stop == 0) || (val < stop && stop != 0))
+        {
+          value = stop == 0 ? val - 3 : val + 3;
+          return value;
+        }
+        else
+        {
+          return false;
+        }
+      }).css(position)
+
+      value = parseInt(value)
+
+      if((val > stop && stop == 0) || (val < stop && stop != 0))
+      {
+          setTimeout(function() { move_door(stop, position, identifier, cb); }, 10)
+      }
+      else
+      {
+        if(typeof cb === 'function')
+        {
+          cb(true)
+        }
+      }
+    }
+
+    fadeLogo = function(show){
+      if(show)
+      {
+        $('.dojo-logo').fadeIn()  
+      }
+      else
+      {
+        $('.dojo-logo').fadeOut()
+      }
+    }
+    
+    open_doors = function() {
+      $('.dojo-logo').hide();
+      move_door(0,'right','.middle',fadeLogo);
+      move_door(0,'left','.left-inner');
+      move_door(0,'left','.left-outer');
+      move_door(0,'right','.right-inner');
+      move_door(0,'right','.right-outer');
+    }
+
+    close_doors = function() {
+      fadeLogo(false);
+      move_door(middle,'right','.middle');
+      move_door(leftInner,'left','.left-inner');
+      move_door(leftOuter,'left','.left-outer');
+      move_door(rightInner,'right','.right-inner');
+      move_door(rightOuter,'right','.right-outer');
+    }
+
+    $(document).keyup(function(data){
+      y = parseInt($('#ninja').css('top'))
+      x = parseInt($('#ninja').css('left'))
+
+      if(doors_open)
+      {
+        if(data.keyCode != 38)
+        {
+          close_doors();
+          doors_open = false;
+          return false;
+        }
+      }
+      if(y <= topBound && (x <= rightDoor || x >= leftDoor) && !doors_open)
+      {
+        if(data.keyCode == 38)
+        {
+          open_doors();
+          doors_open = true;
+          return false;
+        }
+      }
+
+      loc = {}
+      loc.top = y;
+      loc.left = x;
+      if(data.keyCode == 37)
+      {
+        if(x < leftBound)
+        {
+          return false;
+        }
+        else
+        {
+          loc.left = x - 13;
+          direction = 'left'  
+        }
+      }
+      else if(data.keyCode == 39)
+      {
+        if(x > rightBound)
+        {
+          return false
+        }
+        else
+        {
+          loc.left = x + 13;
+          direction = 'right'  
+        }
+      }
+      else if(data.keyCode == 38)
+      {
+        if(y <= topBound)
+        {
+          return false;
+        }
+        else
+        {
+          loc.top = y - 13;
+          direction = 'top'  
+        }
+      }
+      else if(data.keyCode == 40)
+      {
+        if(y >= bottomBound)
+        {
+          return false
+        }
+        else
+        {
+          loc.top = y + 13;
+          direction = 'down'  
+        }
+      }
+
+      walk = ((x + y) % 2) + 1;
+      $('#ninja').css({
+        top: loc.top+'px',
+        left: loc.left+'px'
+      })
+
+      console.log($('#ninja').css('top'));
+      console.log($('#ninja').css('left'));
+
+      src = "/assets/ninja/"+direction+walk+".png"
+      console.log(src);
+      $('#ninja').attr('src', src);
+    })
+  })
+</script>
+<%= javascript_include_tag "rainbow"%>
+<%= stylesheet_link_tag "themes/monokai-soda"%>
+
+<div class="dojo-arena">
+    <%= image_tag "ninja/top1.png", id: "ninja" %>
+    <%= image_tag 'coding_dojo_black.png', class: "dojo-logo" %>
+    <%= image_tag 'dojo_arena.gif', class: 'arena' %>
+    <%= image_tag 'door_middle.gif', class: 'door middle' %>
+    <%= image_tag 'door_right_inner.gif', class: 'door right-inner' %>
+    <%= image_tag 'door_right_outer.gif', class: 'door right-outer' %>
+    <%= image_tag 'door_left_inner.gif', class: 'door left-inner' %>
+    <%= image_tag 'door_left_inner.gif', class: 'door left-outer' %>
+</div>

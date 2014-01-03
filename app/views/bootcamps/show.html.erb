@@ -1,15 +1,31 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @bootcamp.title %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @bootcamp.date %>
-</p>
-
-
-<%= link_to 'Edit', edit_bootcamp_path(@bootcamp) %> |
-<%= link_to 'Back', bootcamps_path %>
+<%= render 'header' %>
+<h3>Surveys</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Survey Results</th>
+      <th>Send Request</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @surveys.each do |survey| %>
+    <tr>
+      <td><%= survey.name %></td>
+      <td>
+      	<button type="button" class="btn btn-default btn-sm">
+      		<a href="<%= bootcamp_survey_responses_statistics_path(@bootcamp.id, survey.survey_id) %>" class="survey-icons"><span class="glyphicon glyphicon-signal"> Stats</span></a>
+      	</button>
+      	<button type="button" class="btn btn-default btn-sm">
+      		<a href="<%= bootcamp_survey_responses_path(@bootcamp.id, survey.survey_id) %>"><span class="glyphicon glyphicon-comment"> Results</span></a>
+      	</button>
+      </td>
+      <td>
+      	<button type]"button" class="btn btn-default btn-sm">
+      		<a href="<%= bootcamp_survey_feedbacks_new_path(@bootcamp.id, survey.survey_id) %>"><span class="glyphicon glyphicon-envelope"> Compose</span></a>
+      	</button>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

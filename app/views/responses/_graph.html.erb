@@ -1,0 +1,83 @@
+<script type="text/javascript">
+	$(function() {
+		new Highcharts.Chart({
+			chart: {
+				type: 'column',
+				renderTo: "chart_<%= @bootcamp.id %>"
+			},
+			title: {
+				text: "<%= @bootcamp.title %> Ratings"
+			},
+			subtitle: {
+				text: '<%= @bootcamp.date.to_datetime.strftime("%B %d %Y") %>'
+			},
+			xAxis: {
+				title: {
+					text: "Term"
+				},
+				categories: ['1st','2nd','3rd','4th']
+			},
+			yAxis: {
+				title: {
+					text: "Rating"
+				}
+			},
+			tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+			plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+			series: [
+				<% @r_types.each do |r_type| %>
+				{
+				name: "<%= r_type.short_content %>",
+				data: <%= (1..4).map {|term| Answer.find_by_sql("SELECT  avg(answers.content) as rating FROM answers JOIN questions ON questions.id = answers.question_id JOIN responses ON responses.id = answers.response_id WHERE questions.id = #{r_type.id} AND responses.bootcamp_id = #{@bootcamp.id} AND responses.survey_id = #{@survey.id} AND responses.term = #{term}").first.rating.to_f.round(2)}.inspect %> 
+				}<%= ',' unless r_type.id == @r_type_end.id %>
+				<% end %>
+			]
+		})
+	})
+</script>
+
+<%= render 'header' %>
+
+<div class="row">
+	<div class="pull-left" style="width:725px; height:400px" id="chart_<%= @bootcamp.id %>"></div>
+	<div class="pull-left">
+		<h4>Rating Averages</h4>
+		<table class="table table-condensed table-bordered table-survey">
+			<thead>
+				<th>Survey Term</th>
+				<% @r_types.each do |title| %>
+						<%= content_tag(:th, title.short_content) %>
+				<% end %>
+			<thead>
+			<tbody>
+					<% count = 1 %>
+					<% survey = 1 %>
+				<% (@ratings).each do |rating| %>
+					<% if count == 1 %>
+						<tr>
+							<td><%= survey %></td>
+					<% end %> 
+					<td><%= rating.ratings.round(2) %></td>
+					<% if (count % 3) == 0 %>
+						</tr>
+						<% survey += 1 %>
+						<% count = 0 %>
+					<% end %>
+					<% count += 1 %>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

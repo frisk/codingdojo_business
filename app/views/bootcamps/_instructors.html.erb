@@ -1,0 +1,9 @@
+<select class="select optional form-control" name="staff[]">
+	<% @instructors.each do |i| %>
+		<% if !@staff.nil? && i.user.id == @staff[0].user_id %>
+			<option selected value="<%= i.id %>"><%= i.user.first_name %></option>
+		<% else %>
+			<option value="<%= i.id %>"><%= i.user.first_name %></option>
+		<% end %>
+	<% end %>
+</select>

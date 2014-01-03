@@ -5,16 +5,41 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <style type="text/css">
+    .dev-opts{
+      float:right;
+      width:300px;
+      text-align: right;
+    }
+    .btn-inverse.btn-inverse-custom{
+      color:red;
+    }
+    .btn-inverse.btn-inverse-custom:hover{
+      color:white;
+    }
+    .opts{
+      border-radius: 6px;
+      padding: 10px;
+      display:inline-block;
+    }
+    .warlock h5{
+      display:inline-block;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-  <%= render 'layouts/nav' unless @current_user.nil? %>
+  <%= render 'layouts/nav' %>
 	<div class="header">
 		<%= yield :header %>
 	</div>
 	<% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, id: "flash_#{name}" %>
-    <% end %>
+      <% if name.to_s == "alert" %>
+        <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-error" %>
+      <% else %>
+        <%= content_tag :div, msg, id: "flash_#{name}", class: "alert alert-success" %>
+      <% end %>
+  <% end %>
 <%= yield %>
 </div>
 </body>

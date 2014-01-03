@@ -1,9 +1,10 @@
 class AnswersController < ApplicationController
+  layout 'student_survey', only: :new
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
 
   def new
-    @survey = Survey.find(params[:survey_id])
     @response = Response.find(params[:response_id])
+    @survey = @response.survey
     @bootcamp = @response.bootcamp
     @questions = @survey.questions.all
     @i = 0
@@ -26,7 +27,7 @@ class AnswersController < ApplicationController
     end
     update_spreadsheet
     if !@errors
-      render :thank_you 
+      redirect_to thankyou_path 
     else
       render action: 'new'
     end
@@ -45,34 +46,52 @@ class AnswersController < ApplicationController
 
     def update_spreadsheet
       connection = GoogleDrive.login(ENV["GMAIL_USERNAME"], ENV["GMAIL_PASSWORD"]) 
-      ss = connection.spreadsheet_by_title('CodingDojo Bootcamp Students (July 29th)') 
+      ss = connection.spreadsheet_by_title('Weekly Survey tst') 
 
       response = Response.find(params[:answer]["1"][:response_id])
-      
-      title = "Weekly Survey #{response.term}"
+
+      title = "Sheet1"
       ws = ss.worksheet_by_title(title)
-      if ws.nil?
-        ws = ss.add_worksheet(title)
-        last_row = 1 + ws.num_rows 
-        ws[last_row, 1] = 'Time Submitted'
-        ws[last_row, 2] = 'Who Was your Remote TA?'
-        cur_col = 2
-        params[:answer].each do |index, ans|
-          cur_col += 1
-          val = Question.find(ans[:question_id].to_i).content
-          ws[last_row, cur_col] = val
-        end
-      end
+      
+      # use this piece of code if creating a new worksheet
+
+      # if ws.nil?
+      #   ws = ss.add_worksheet(title)
+      #   last_row = 1 + ws.num_rows 
+      #   ws[last_row, 1] = 'Time Submitted'
+      #   ws[last_row, 2] = 'Who Was your Remote TA?'
+      #   cur_col = 2
+      #   params[:answer].each do |index, ans|
+      #     cur_col += 1
+      #     val = Question.find(ans[:question_id].to_i).content
+      #     ws[last_row, cur_col] = val
+      #   end
+      # end
 
       last_row = 1 + ws.num_rows
       ws[last_row, 1] = Time.new
-      ws[last_row, 2] = response.staff.first_name
-      cur_col = 2  
+
       params[:answer].each do |index, ans|
-        val = index.to_i
-        col = cur_col + val
+        case ans[:question_id].to_i
+        when 1
+          col = 9
+        when 2
+          col = 2
+        when 3
+          col = 3
+        when 4
+          col = 4
+        when 5
+          col = 7
+        when 6
+          col = 8
+        when 9
+          col = 6
+        end
         ws[last_row, col] = ans[:content]
-      end 
+      end
+      ws[last_row, 11] = response.bootcamp.staffs.find_by_position_id(1).user.first_name 
+      ws[last_row, 12] = response.staff.user.first_name
       ws.save
     end
 end
