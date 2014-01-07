@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0.beta1'
 
-gem 'sqlite3'
 gem 'hirb'
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,6 +31,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.0.1'
 
 group :development do
+	gem 'sqlite3'
 	gem 'better_errors'
 	gem 'quiet_assets'
 end
